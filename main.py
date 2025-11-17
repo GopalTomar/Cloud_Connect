@@ -37,7 +37,14 @@ class CloudConnect:
                 config['runtime'] = input("Select runtime (python / nodejs / dotnet): ")
                 config['region'] = input("Select region (EastUS / WestEurope / CentralIndia): ")
                 config['replica_count'] = int(input("Select replica count (1 / 2 / 3): "))
-            # TODO: add prompts for StorageAccount and CacheDB
+            elif selected_type == "StorageAccount":
+                config['encryption_enabled'] = input("Enable encryption? (true / false): ").lower() == 'true'
+                config['access_key'] = input("Enter access key: ")
+                config['max_size_gb'] = int(input("Enter max size (GB): "))
+            elif selected_type == "CacheDB":
+                config['ttl_seconds'] = int(input("Enter TTL (seconds): "))
+                config['capacity_mb'] = int(input("Enter capacity (MB): "))
+                config['eviction_policy'] = input("Enter eviction policy (LRU / FIFO): ")
 
             self.resources[name] = ResourceRegistry.create(selected_type, **config)
             print(f"{selected_type} created successfully!")
